@@ -1,0 +1,1 @@
+An online platform that enables users to share startup ideas, collaborate with like-minded individuals, and connect with investors. Designed like a virtual startup bootcamp, it streamlines team formation, idea development, and early-stage funding through seamless collaboration and networking within a dynamic, innovation-driven ecosystem.
