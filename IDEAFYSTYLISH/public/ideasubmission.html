@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Submit Your Idea - IDEAFY (Harry Potter Edition)</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gryffindor-gold: #d4af37;
+      --gryffindor-red: #ae0001;
+      --magic-purple: #4a148c;
+      --hogwarts-brown: #8b4513;
+      --enchanted-blue: #0d47a1;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a237e 0%, #4a148c 25%, #6a1b9a 50%, #8e24aa 75%, #ab47bc 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Magical Background Elements */
+    .magic-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Floating Golden Snitches */
+    .golden-snitch {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle, #ffd700 0%, #b8860b 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+      animation: fly 15s infinite linear;
+    }
+
+    .golden-snitch::before,
+    .golden-snitch::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 6px;
+      background: rgba(255, 215, 0, 0.7);
+      border-radius: 50% 10px 50% 10px;
+      top: 7px;
+    }
+
+    .golden-snitch::before {
+      left: -10px;
+      animation: wing-flap 0.3s infinite alternate;
+    }
+
+    .golden-snitch::after {
+      right: -10px;
+      animation: wing-flap 0.3s infinite alternate-reverse;
+    }
+
+    @keyframes fly {
+      0% { transform: translate(-50px, 20vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translate(100vw, 80vh) rotate(360deg); opacity: 0; }
+    }
+
+    @keyframes wing-flap {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(45deg); }
+    }
+
+    .golden-snitch:nth-child(1) { animation-delay: 0s; top: 10%; }
+    .golden-snitch:nth-child(2) { animation-delay: 5s; top: 30%; }
+    .golden-snitch:nth-child(3) { animation-delay: 10s; top: 60%; }
+    .golden-snitch:nth-child(4) { animation-delay: 2s; top: 80%; }
+
+    /* Magical Sparkles */
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      border-radius: 50%;
+      animation: sparkle 3s infinite ease-in-out;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1) rotate(180deg); }
+    }
+
+    .sparkle:nth-child(odd) { animation-delay: 1s; }
+    .sparkle:nth-child(even) { animation-delay: 2s; }
+
+    /* Floating Magical Particles */
+    .magic-particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: var(--gryffindor-gold);
+      border-radius: 50%;
+      animation: float-up 8s infinite linear;
+      opacity: 0.7;
+    }
+
+    @keyframes float-up {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+
+    /* Main Container */
+    .idea-container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(212, 175, 55, 0.3);
+      padding: 40px;
+      border-radius: 25px;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 0 50px rgba(212, 175, 55, 0.2);
+      width: 90%;
+      max-width: 600px;
+      animation: magical-entrance 1.5s ease-out;
+      position: relative;
+      z-index: 10;
+    }
+
+    @keyframes magical-entrance {
+      0% { 
+        opacity: 0; 
+        transform: translateY(50px) scale(0.8) rotateX(15deg); 
+      }
+      50% { 
+        opacity: 0.7; 
+        transform: translateY(0) scale(1.05) rotateX(0deg); 
+      }
+      100% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1) rotateX(0deg); 
+      }
+    }
+
+    /* Magical Border Animation */
+    .idea-container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border-radius: 25px;
+      background: linear-gradient(45deg, var(--gryffindor-gold), var(--magic-purple), var(--gryffindor-gold));
+      z-index: -1;
+      animation: border-glow 3s infinite linear;
+    }
+
+    @keyframes border-glow {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      text-align: center;
+      color: var(--gryffindor-gold);
+      margin-bottom: 30px;
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      animation: title-glow 2s infinite alternate;
+    }
+
+    @keyframes title-glow {
+      0% { text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5), 0 0 20px var(--gryffindor-gold); }
+      100% { text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5), 0 0 30px var(--gryffindor-gold), 0 0 40px var(--gryffindor-gold); }
+    }
+
+    textarea {
+      width: 100%;
+      height: 180px;
+      padding: 20px;
+      font-size: 1.1rem;
+      font-family: 'Poppins', sans-serif;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid var(--gryffindor-gold);
+      border-radius: 15px;
+      resize: vertical;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--magic-purple);
+      box-shadow: 
+        inset 0 2px 10px rgba(0, 0, 0, 0.1),
+        0 0 20px rgba(212, 175, 55, 0.5);
+      transform: scale(1.02);
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .btn {
+      flex: 1 1 48%;
+      min-width: 200px;
+      padding: 15px 20px;
+      background: linear-gradient(45deg, var(--gryffindor-gold), #b8860b);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'Cinzel', serif;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(45deg, #b8860b, var(--gryffindor-gold));
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    /* Spell casting effect */
+    .btn.casting {
+      animation: spell-cast 0.8s ease-out;
+    }
+
+    @keyframes spell-cast {
+      0% { transform: scale(1); }
+      25% { transform: scale(1.1) rotate(2deg); }
+      50% { transform: scale(1.05) rotate(-1deg); }
+      75% { transform: scale(1.08) rotate(1deg); }
+      100% { transform: scale(1); }
+    }
+
+    .info {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-style: italic;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      animation: info-glow 3s infinite ease-in-out;
+    }
+
+    @keyframes info-glow {
+      0%, 100% { opacity: 0.9; }
+      50% { opacity: 1; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.3); }
+    }
+
+    .message {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--gryffindor-gold);
+      font-weight: bold;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+      animation: message-appear 0.8s ease-out;
+    }
+
+    @keyframes message-appear {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Magical particles on button click */
+    .magic-burst {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--gryffindor-gold);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: burst 1s ease-out forwards;
+    }
+
+    @keyframes burst {
+      0% { 
+        opacity: 1; 
+        transform: scale(0) rotate(0deg); 
+      }
+      100% { 
+        opacity: 0; 
+        transform: scale(3) rotate(360deg) translate(50px, -50px); 
+      }
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .idea-container {
+        padding: 25px;
+        margin: 20px;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      textarea {
+        height: 150px;
+        font-size: 1rem;
+        padding: 15px;
+      }
+
+      .btn {
+        flex: 1 1 100%;
+        min-width: auto;
+        margin-bottom: 10px;
+        font-size: 1rem;
+        padding: 12px 18px;
+      }
+
+      .info {
+        font-size: 1rem;
+      }
+
+      .golden-snitch {
+        width: 15px;
+        height: 15px;
+      }
+
+      .golden-snitch::before,
+      .golden-snitch::after {
+        width: 10px;
+        height: 5px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .idea-container {
+        padding: 20px;
+        margin: 10px;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+      }
+
+      textarea {
+        height: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Magical Background -->
+  <div class="magic-background">
+    <!-- Golden Snitches -->
+    <div class="golden-snitch"></div>
+    <div class="golden-snitch"></div>
+    <div class="golden-snitch"></div>
+    <div class="golden-snitch"></div>
+  </div>
+
+  <div class="idea-container">
+    <h2><i class="fas fa-magic"></i> Submit Your Brilliant Idea</h2>
+    <textarea id="ideaInput" placeholder="Share your magical innovation here... ✨"></textarea>
+    <div class="buttons">
+      <button class="btn" onclick="submitIdea(this)">
+        <i class="fas fa-rocket"></i> Submit Idea
+      </button>
+
+      
+      <button class="btn" onclick="window.location.href='similarteams.html'">
+        <i class="fas fa-search"></i> Search Similar Teams
+      </button>
+    </div>
+    <div class="info">
+      <i class="fas fa-users"></i> Discover teams working on similar ideas and take the next step in bringing your magical vision to life.
+    </div>
+    <div id="message" class="message"></div>
+  </div>
+
+  <script>
+    // Create magical sparkles
+    function createSparkles() {
+      for (let i = 0; i < 30; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.top = Math.random() * 100 + '%';
+        sparkle.style.animationDelay = Math.random() * 3 + 's';
+        document.querySelector('.magic-background').appendChild(sparkle);
+      }
+    }
+
+    // Create floating magical particles
+    function createMagicParticles() {
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'magic-particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 8 + 's';
+        particle.style.animationDuration = (Math.random() * 5 + 8) + 's';
+        document.querySelector('.magic-background').appendChild(particle);
+      }
+    }
+
+    // Create magical burst effect
+    function createMagicBurst(x, y) {
+      for (let i = 0; i < 8; i++) {
+        const burst = document.createElement('div');
+        burst.className = 'magic-burst';
+        burst.style.left = x + 'px';
+        burst.style.top = y + 'px';
+        burst.style.animationDelay = (i * 0.1) + 's';
+        document.body.appendChild(burst);
+        
+        setTimeout(() => {
+          burst.remove();
+        }, 1000);
+      }
+    }
+
+    function submitIdea(button) {
+      const ideaText = document.getElementById("ideaInput").value.trim();
+      const messageBox = document.getElementById("message");
+      
+      if (ideaText === "") {
+        messageBox.innerHTML = "<i class='fas fa-exclamation-triangle'></i> Please share your magical idea first!";
+        messageBox.style.color = "#ff6b6b";
+        return;
+      }
+      
+      // Add spell casting effect
+      button.classList.add('casting');
+      setTimeout(() => button.classList.remove('casting'), 800);
+      
+      // Create magic burst effect
+      const rect = button.getBoundingClientRect();
+      createMagicBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      
+      messageBox.innerHTML = "<i class='fas fa-check-circle'></i> Your magical idea has been submitted successfully! ✨";
+      messageBox.style.color = "#d4af37";
+      
+      // Clear the form after submission
+      setTimeout(() => {
+        document.getElementById("ideaInput").value = "";
+      }, 2000);
+    }
+
+    function searchTeams(button) {
+      // Add spell casting effect
+      button.classList.add('casting');
+      setTimeout(() => button.classList.remove('casting'), 800);
+      
+      // Create magic burst effect
+      const rect = button.getBoundingClientRect();
+      createMagicBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      
+      const messageBox = document.getElementById("message");
+      messageBox.innerHTML = "<i class='fas fa-crystal-ball'></i> Searching for similar magical teams... 🔮";
+      messageBox.style.color = "#ab47bc";
+      
+      // Simulate search process
+      setTimeout(() => {
+        messageBox.innerHTML = "<i class='fas fa-users'></i> Found 3 teams working on similar enchantments! Check your notifications. ⚡";
+        messageBox.style.color = "#d4af37";
+      }, 2000);
+    }
+
+    // Initialize magical effects
+    document.addEventListener('DOMContentLoaded', function() {
+      createSparkles();
+      createMagicParticles();
+      
+      // Add more particles periodically
+      setInterval(() => {
+        if (document.querySelectorAll('.magic-particle').length < 20) {
+          createMagicParticles();
+        }
+      }, 10000);
+    });
+
+    // Add magical cursor trail effect
+    document.addEventListener('mousemove', function(e) {
+      if (Math.random() < 0.1) { // 10% chance
+        const trail = document.createElement('div');
+        trail.style.position = 'fixed';
+        trail.style.left = e.clientX + 'px';
+        trail.style.top = e.clientY + 'px';
+        trail.style.width = '3px';
+        trail.style.height = '3px';
+        trail.style.background = '#ffd700';
+        trail.style.borderRadius = '50%';
+        trail.style.pointerEvents = 'none';
+        trail.style.zIndex = '1000';
+        trail.style.animation = 'sparkle 1s ease-out forwards';
+        document.body.appendChild(trail);
+        
+        setTimeout(() => trail.remove(), 1000);
+      }
+    });
+  </script>
+</body>
+</html>

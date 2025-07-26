@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Team Portal - IDEAFY (Harry Potter Edition)</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      background: linear-gradient(135deg, #0f0f23, #1a1a3a, #2d1b69, #4c2882);
+      background-size: 400% 400%;
+      animation: magicalBG 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @keyframes magicalBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Golden Snitch Animation */
+    .golden-snitch {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(circle, #ffd700, #ffb347);
+      border-radius: 50%;
+      z-index: 0;
+      animation: snitchFly 8s linear infinite;
+      box-shadow: 0 0 15px #ffd700;
+    }
+
+    .golden-snitch::before,
+    .golden-snitch::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 8px;
+      background: rgba(255, 215, 0, 0.7);
+      border-radius: 50%;
+      top: 50%;
+      animation: wingFlap 0.5s ease-in-out infinite alternate;
+    }
+
+    .golden-snitch::before {
+      left: -15px;
+      transform: translateY(-50%) rotate(-20deg);
+    }
+
+    .golden-snitch::after {
+      right: -15px;
+      transform: translateY(-50%) rotate(20deg);
+    }
+
+    @keyframes snitchFly {
+      0% {
+        transform: translateX(-50px) translateY(0px);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      50% {
+        transform: translateX(50vw) translateY(-30px);
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(calc(100vw + 50px)) translateY(0px);
+        opacity: 0;
+      }
+    }
+
+    @keyframes wingFlap {
+      0% { transform: translateY(-50%) rotate(-20deg) scaleY(1); }
+      100% { transform: translateY(-50%) rotate(-20deg) scaleY(0.3); }
+    }
+
+    /* Magical Spell Particles */
+    .spell-particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #9d4edd;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: spellFloat 6s linear infinite;
+      box-shadow: 0 0 10px #9d4edd;
+    }
+
+    .spell-particle.blue {
+      background: #4cc9f0;
+      box-shadow: 0 0 10px #4cc9f0;
+    }
+
+    .spell-particle.gold {
+      background: #ffd60a;
+      box-shadow: 0 0 10px #ffd60a;
+    }
+
+    @keyframes spellFloat {
+      0% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) translateX(20px) scale(0);
+        opacity: 0;
+      }
+    }
+
+    /* Floating Hogwarts Letters */
+    .hogwarts-letter {
+      position: absolute;
+      width: 40px;
+      height: 30px;
+      background: #f4e4bc;
+      border: 2px solid #8b4513;
+      opacity: 0.7;
+      animation: letterFloat 12s linear infinite;
+      clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+    }
+
+    .hogwarts-letter::before {
+      content: '⚡';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #8b4513;
+      font-size: 16px;
+    }
+
+    @keyframes letterFloat {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.7;
+      }
+      90% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-50px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Magic Glow Effects */
+    .magic-glow {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(157, 78, 221, 0.3), transparent 70%);
+      border-radius: 50%;
+      animation: magicGlow 8s ease-in-out infinite;
+      z-index: 0;
+      filter: blur(30px);
+    }
+
+    .magic-glow:nth-child(1) {
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .magic-glow:nth-child(2) {
+      bottom: 20%;
+      right: 10%;
+      animation-delay: 4s;
+      background: radial-gradient(circle, rgba(255, 214, 10, 0.3), transparent 70%);
+    }
+
+    @keyframes magicGlow {
+      0%, 100% { 
+        transform: translateY(0px) scale(1); 
+        opacity: 0.3; 
+      }
+      50% { 
+        transform: translateY(-30px) scale(1.2); 
+        opacity: 0.6; 
+      }
+    }
+
+    /* Main Container */
+    .container {
+      z-index: 1;
+      text-align: center;
+      padding: 40px;
+      background: rgba(15, 15, 35, 0.85);
+      border: 3px solid #ffd700;
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 
+        0 0 30px rgba(255, 215, 0, 0.3),
+        inset 0 0 20px rgba(157, 78, 221, 0.1);
+      width: 90%;
+      max-width: 450px;
+      animation: containerPulse 4s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ffd700, #9d4edd, #4cc9f0, #ffd700);
+      border-radius: 20px;
+      z-index: -1;
+      animation: borderRotate 3s linear infinite;
+    }
+
+    @keyframes containerPulse {
+      0%, 100% { 
+        box-shadow: 
+          0 0 30px rgba(255, 215, 0, 0.3),
+          inset 0 0 20px rgba(157, 78, 221, 0.1);
+      }
+      50% { 
+        box-shadow: 
+          0 0 50px rgba(255, 215, 0, 0.5),
+          inset 0 0 30px rgba(157, 78, 221, 0.2);
+      }
+    }
+
+    @keyframes borderRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      color: #ffd700;
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      text-shadow: 
+        0 0 10px #ffd700,
+        0 0 20px #ffd700,
+        0 0 30px #ffd700;
+      text-align: center;
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { 
+        text-shadow: 
+          0 0 10px #ffd700,
+          0 0 20px #ffd700,
+          0 0 30px #ffd700;
+      }
+      100% { 
+        text-shadow: 
+          0 0 15px #ffd700,
+          0 0 25px #ffd700,
+          0 0 35px #ffd700,
+          0 0 45px #ffd700;
+      }
+    }
+
+    /* Magical Buttons */
+    .btn {
+      width: 100%;
+      padding: 18px;
+      margin: 15px 0;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(45deg, #9d4edd, #4cc9f0);
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 
+        0 8px 20px rgba(157, 78, 221, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+      animation: buttonFloat 3s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    @keyframes buttonFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .btn:hover {
+      transform: scale(1.05) translateY(-3px);
+      background: linear-gradient(45deg, #b865d6, #66d4f2);
+      box-shadow: 
+        0 12px 30px rgba(157, 78, 221, 0.5),
+        inset 0 0 30px rgba(255, 255, 255, 0.2),
+        0 0 20px rgba(255, 215, 0, 0.3);
+      animation: wandSpell 0.6s ease-in-out;
+    }
+
+    @keyframes wandSpell {
+      0% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(180deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+      box-shadow: 
+        0 4px 10px rgba(157, 78, 221, 0.4),
+        inset 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 480px) {
+      .container {
+        padding: 25px;
+        margin: 20px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+      }
+      
+      .btn {
+        font-size: 1rem;
+        padding: 15px;
+        margin: 12px 0;
+      }
+
+      .golden-snitch {
+        width: 25px;
+        height: 25px;
+      }
+
+      .hogwarts-letter {
+        width: 30px;
+        height: 25px;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+      
+      .btn {
+        font-size: 0.9rem;
+        padding: 12px;
+      }
+    }
+
+    /* Wand Trail Effect */
+    .wand-trail {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #ffd700;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: wandTrail 1s ease-out forwards;
+      box-shadow: 0 0 10px #ffd700;
+    }
+
+    @keyframes wandTrail {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(3);
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Magical Background Effects -->
+  <div class="magic-glow"></div>
+  <div class="magic-glow"></div>
+
+  <!-- Main Container -->
+  <div class="container">
+    <h1><i class="fas fa-hat-wizard"></i> Team Portal - ✨IDEAFY✨</h1>
+    <button class="btn" onclick="window.location.href='ideasubmission.html'">
+      <i class="fas fa-users"></i> Form Team
+    </button> 
+    <button class="btn" onclick="window.location.href='jointeam.html'">
+      <i class="fas fa-handshake"></i> Join Team
+    </button>
+  </div>
+
+  <script>
+    // Create Golden Snitches
+    function createGoldenSnitch() {
+      const snitch = document.createElement('div');
+      snitch.className = 'golden-snitch';
+      snitch.style.top = Math.random() * 80 + 10 + '%';
+      snitch.style.animationDuration = (Math.random() * 4 + 6) + 's';
+      snitch.style.animationDelay = Math.random() * 3 + 's';
+      document.body.appendChild(snitch);
+
+      setTimeout(() => {
+        snitch.remove();
+      }, 10000);
+    }
+
+    // Create Spell Particles
+    function createSpellParticle() {
+      const particle = document.createElement('div');
+      const colors = ['', 'blue', 'gold'];
+      particle.className = 'spell-particle ' + colors[Math.floor(Math.random() * colors.length)];
+      particle.style.left = Math.random() * 100 + 'vw';
+      particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+      particle.style.animationDelay = Math.random() * 2 + 's';
+      document.body.appendChild(particle);
+
+      setTimeout(() => {
+        particle.remove();
+      }, 8000);
+    }
+
+    // Create Hogwarts Letters
+    function createHogwartsLetter() {
+      const letter = document.createElement('div');
+      letter.className = 'hogwarts-letter';
+      letter.style.left = Math.random() * 90 + 5 + '%';
+      letter.style.animationDuration = (Math.random() * 6 + 8) + 's';
+      letter.style.animationDelay = Math.random() * 4 + 's';
+      document.body.appendChild(letter);
+
+      setTimeout(() => {
+        letter.remove();
+      }, 14000);
+    }
+
+    // Wand Trail Effect on Mouse Move
+    document.addEventListener('mousemove', (e) => {
+      if (Math.random() < 0.1) { // Only create trail 10% of the time to avoid overload
+        const trail = document.createElement('div');
+        trail.className = 'wand-trail';
+        trail.style.left = e.clientX + 'px';
+        trail.style.top = e.clientY + 'px';
+        document.body.appendChild(trail);
+
+        setTimeout(() => {
+          trail.remove();
+        }, 1000);
+      }
+    });
+
+    // Initialize magical elements
+    setInterval(createGoldenSnitch, 3000);
+    setInterval(createSpellParticle, 500);
+    setInterval(createHogwartsLetter, 4000);
+
+    // Create initial elements
+    for (let i = 0; i < 3; i++) {
+      setTimeout(createGoldenSnitch, i * 1000);
+    }
+
+    for (let i = 0; i < 15; i++) {
+      setTimeout(createSpellParticle, i * 200);
+    }
+
+    for (let i = 0; i < 2; i++) {
+      setTimeout(createHogwartsLetter, i * 2000);
+    }
+
+    // Enhanced button hover effects
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('mouseenter', function() {
+        // Create magical sparkles around button
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            const sparkle = document.createElement('div');
+            sparkle.style.position = 'absolute';
+            sparkle.style.width = '4px';
+            sparkle.style.height = '4px';
+            sparkle.style.background = '#ffd700';
+            sparkle.style.borderRadius = '50%';
+            sparkle.style.boxShadow = '0 0 10px #ffd700';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.zIndex = '1000';
+            
+            const rect = this.getBoundingClientRect();
+            sparkle.style.left = (rect.left + Math.random() * rect.width) + 'px';
+            sparkle.style.top = (rect.top + Math.random() * rect.height) + 'px';
+            
+            sparkle.style.animation = 'wandTrail 0.8s ease-out forwards';
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => sparkle.remove(), 800);
+          }, i * 100);
+        }
+      });
+    });
+
+  </script>
+
+</body>
+</html>

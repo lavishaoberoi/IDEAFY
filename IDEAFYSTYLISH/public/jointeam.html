@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IDEAFY | Team Collaboration</title>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text&display=swap');
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Crimson Text', serif;
+      background: url('https://wallpapercave.com/wp/wp3272476.gif') center center / cover no-repeat fixed;
+      color: #f0e6d2;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Magical Particles Background */
+    .magical-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      color: #ffd700;
+      font-size: 12px;
+      animation: float 6s infinite ease-in-out;
+      opacity: 0.8;
+    }
+
+    @keyframes float {
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.3;
+      }
+      25% { 
+        transform: translateY(-20px) rotate(90deg);
+        opacity: 0.8;
+      }
+      50% { 
+        transform: translateY(-40px) rotate(180deg);
+        opacity: 1;
+      }
+      75% { 
+        transform: translateY(-20px) rotate(270deg);
+        opacity: 0.6;
+      }
+    }
+
+    /* Floating Owls */
+    .owl {
+      position: fixed;
+      font-size: 24px;
+      color: #8B4513;
+      z-index: 2;
+      animation: fly 15s infinite linear;
+      opacity: 0.7;
+    }
+
+    @keyframes fly {
+      0% {
+        transform: translateX(-100px) translateY(0px);
+      }
+      25% {
+        transform: translateX(25vw) translateY(-30px);
+      }
+      50% {
+        transform: translateX(50vw) translateY(20px);
+      }
+      75% {
+        transform: translateX(75vw) translateY(-20px);
+      }
+      100% {
+        transform: translateX(calc(100vw + 100px)) translateY(10px);
+      }
+    }
+
+    /* Lightning Animation */
+    .lightning {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent 49%, #87ceeb 50%, transparent 51%);
+      opacity: 0;
+      animation: lightning-flash 8s infinite;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    @keyframes lightning-flash {
+      0%, 90%, 100% { opacity: 0; }
+      91%, 94% { opacity: 0.3; }
+      92%, 93% { opacity: 0.8; }
+    }
+
+    /* Golden Snitch */
+    .golden-snitch {
+      position: fixed;
+      font-size: 16px;
+      color: #ffd700;
+      z-index: 4;
+      animation: snitch-flight 12s infinite ease-in-out;
+      top: 20%;
+      left: -50px;
+    }
+
+    @keyframes snitch-flight {
+      0% { 
+        transform: translateX(0) translateY(0) scale(1);
+        left: -50px;
+        top: 20%;
+      }
+      25% {
+        transform: translateX(0) translateY(-50px) scale(1.2);
+        left: 30%;
+        top: 10%;
+      }
+      50% {
+        transform: translateX(0) translateY(30px) scale(0.8);
+        left: 70%;
+        top: 40%;
+      }
+      75% {
+        transform: translateX(0) translateY(-20px) scale(1.1);
+        left: 20%;
+        top: 60%;
+      }
+      100% {
+        transform: translateX(0) translateY(0) scale(1);
+        left: calc(100% + 50px);
+        top: 30%;
+      }
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 2.5rem;
+      color: #f5da42;
+      margin-bottom: 40px;
+      animation: glow 2s infinite alternate;
+      position: relative;
+      z-index: 10;
+    }
+
+    @keyframes glow {
+      from { 
+        text-shadow: 0 0 5px #ffd700, 0 0 10px #ffb300; 
+        transform: scale(1);
+      }
+      to { 
+        text-shadow: 0 0 20px #ffff99, 0 0 30px #f5da42, 0 0 40px #ffd700; 
+        transform: scale(1.02);
+      }
+    }
+
+    .team-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .team-card {
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      border: 2px solid transparent;
+      animation: cardAppear 0.6s ease-out;
+    }
+
+    @keyframes cardAppear {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .team-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 30px #f5da42;
+      border: 2px solid #ffd700;
+    }
+
+    .team-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ffd700, #ffb300, #f5da42, #ffd700);
+      background-size: 400% 400%;
+      border-radius: 16px;
+      z-index: -1;
+      animation: borderGlow 3s ease infinite;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .team-card:hover::before {
+      opacity: 0.7;
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* Magic Wand Icons */
+    .team-card::after {
+      content: '🪄';
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .team-card:hover::after {
+      opacity: 1;
+      transform: rotate(15deg);
+      animation: wandSparkle 1s infinite;
+    }
+
+    @keyframes wandSparkle {
+      0%, 100% { transform: rotate(15deg) scale(1); }
+      50% { transform: rotate(-15deg) scale(1.2); }
+    }
+
+    .idea-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ffdd57;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .members {
+      font-size: 0.95rem;
+      color: #eee;
+      margin-bottom: 10px;
+    }
+
+    .description {
+      font-size: 0.9rem;
+      color: #ddd;
+      margin-bottom: 15px;
+    }
+
+    .join-btn {
+      background: #f5da42;
+      color: #000;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-family: 'Cinzel Decorative', cursive;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .join-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #fff, 0 0 20px #ffd700;
+      animation: buttonPulse 1.5s infinite;
+    }
+
+    @keyframes buttonPulse {
+      0%, 100% { box-shadow: 0 0 10px #fff, 0 0 20px #ffd700; }
+      50% { box-shadow: 0 0 20px #fff, 0 0 40px #ffd700, 0 0 60px #ffb300; }
+    }
+
+    .join-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .join-btn:hover::before {
+      left: 100%;
+    }
+
+    .request-sent {
+      margin-top: 10px;
+      color: #90ee90;
+      font-size: 0.9rem;
+      display: none;
+      animation: successGlow 2s ease-in-out;
+    }
+
+    @keyframes successGlow {
+      0% { opacity: 0; transform: translateY(-10px); }
+      50% { opacity: 1; transform: translateY(0); text-shadow: 0 0 10px #90ee90; }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .wand-sparkles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: url('https://i.gifer.com/Zxke.gif') center center / cover no-repeat;
+      opacity: 0.12;
+      animation: swirl 90s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes swirl {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      body { padding: 15px; }
+      h1 { font-size: 2rem; margin-bottom: 30px; }
+      .team-container { gap: 15px; }
+      .team-card { padding: 15px; }
+      .idea-title { font-size: 1.1rem; }
+      .particle { font-size: 10px; }
+      .owl { font-size: 20px; }
+      .golden-snitch { font-size: 14px; }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 10px; }
+      h1 { font-size: 1.8rem; }
+      .idea-title { font-size: 1rem; }
+      .description, .members { font-size: 0.85rem; }
+      .join-btn { padding: 8px 12px; font-size: 0.9rem; }
+      .team-card { padding: 12px; }
+      .particle { font-size: 8px; }
+      .owl { font-size: 16px; }
+    }
+
+    /* Shooting Stars */
+    .shooting-star {
+      position: fixed;
+      width: 2px;
+      height: 2px;
+      background: #ffd700;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #ffd700;
+      animation: shoot 3s linear infinite;
+      z-index: 2;
+    }
+
+    @keyframes shoot {
+      0% {
+        transform: translateX(-100px) translateY(-100px);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(calc(100vw + 100px)) translateY(calc(100vh + 100px));
+        opacity: 0;
+      }
+    }
+
+    /* Harry Potter Specific Enhancements */
+    body {
+      background: url('https://wallpapercave.com/wp/wp3272476.gif') center center / cover no-repeat fixed, 
+                  linear-gradient(to bottom, #0d1a26, #1a0d26);
+    }
+
+    /* Hogwarts Houses Colors for Cards */
+    .team-card:nth-child(4n+1)::before {
+      background: linear-gradient(45deg, #740001, #ae0001, #eeba30, #d3a625); /* Gryffindor */
+    }
+    
+    .team-card:nth-child(4n+2)::before {
+      background: linear-gradient(45deg, #1a472a, #2a623d, #5d5d5d, #aaaaaa); /* Slytherin */
+    }
+    
+    .team-card:nth-child(4n+3)::before {
+      background: linear-gradient(45deg, #0e1a40, #222f5b, #946b2d, #c29730); /* Ravenclaw */
+    }
+    
+    .team-card:nth-child(4n+4)::before {
+      background: linear-gradient(45deg, #ecb939, #f0c75e, #726255, #372e29); /* Hufflepuff */
+    }
+
+    /* Floating Candles */
+    .floating-candle {
+      position: fixed;
+      width: 2px;
+      height: 20px;
+      background-color: #f8f8f0;
+      border-radius: 1px 1px 0 0;
+      z-index: 3;
+      box-shadow: 0 0 15px 5px rgba(255, 210, 100, 0.6);
+      animation: candle-float 30s linear infinite;
+    }
+
+    .floating-candle::before {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #ffdd22;
+      border-radius: 50%;
+      top: -4px;
+      left: -2px;
+      box-shadow: 0 0 10px 3px rgba(255, 180, 0, 0.6);
+      animation: flicker 2s infinite alternate;
+    }
+
+    @keyframes candle-float {
+      0% {
+        transform: translateY(100vh);
+      }
+      100% {
+        transform: translateY(-50px);
+      }
+    }
+
+    @keyframes flicker {
+      0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 10px 3px rgba(255, 180, 0, 0.6);
+      }
+      50% {
+        opacity: 0.8;
+        box-shadow: 0 0 6px 2px rgba(255, 180, 0, 0.4);
+      }
+    }
+
+    /* Potion Bubbles */
+    .potion-bubble {
+      position: fixed;
+      background: radial-gradient(circle, rgba(144, 238, 144, 0.8), rgba(0, 255, 255, 0.4));
+      border-radius: 50%;
+      z-index: 2;
+      animation: bubble-rise 15s ease-in infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes bubble-rise {
+      0% {
+        transform: translateY(100vh) scale(0.3);
+        opacity: 0.7;
+      }
+      70% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-100px) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* Magic Wand Cursor */
+    body {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ffd700" d="M7,4l10,8l-10,8V4z"/></svg>') 0 0, auto;
+    }
+
+    .join-btn {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ffd700" d="M20.1,4.5l-1.5-1.5l-5.6,5.6L7.4,3L6,4.5l5.6,5.6L6,15.6L7.4,17l5.6-5.6l5.6,5.6l1.5-1.5l-5.6-5.6L20.1,4.5z"/></svg>') 0 0, pointer;
+    }
+
+    /* Flying Owls with Letters */
+    .owl-with-letter {
+      position: fixed;
+      z-index: 5;
+      font-size: 24px;
+      animation: owl-delivery 25s linear infinite;
+    }
+
+    .owl-with-letter::after {
+      content: '✉️';
+      position: absolute;
+      font-size: 14px;
+      bottom: -10px;
+      right: -10px;
+    }
+
+    @keyframes owl-delivery {
+      0% {
+        transform: translateX(-100px) translateY(50vh) rotate(0deg);
+      }
+      20% {
+        transform: translateX(20vw) translateY(30vh) rotate(5deg);
+      }
+      40% {
+        transform: translateX(40vw) translateY(40vh) rotate(-5deg);
+      }
+      60% {
+        transform: translateX(60vw) translateY(20vh) rotate(5deg);
+      }
+      80% {
+        transform: translateX(80vw) translateY(30vh) rotate(-5deg);
+      }
+      100% {
+        transform: translateX(calc(100vw + 100px)) translateY(50vh) rotate(0deg);
+      }
+    }
+
+    /* Marauder's Map Footprints */
+    .footprints {
+      position: fixed;
+      bottom: 10px;
+      left: -50px;
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.3);
+      animation: walk 30s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes walk {
+      0% {
+        transform: translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.3;
+      }
+      90% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateX(calc(100vw + 100px)) rotate(0deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Animations -->
+  <div class="wand-sparkles"></div>
+  <div class="lightning"></div>
+  
+  <!-- Magical Particles -->
+  <div class="magical-particles" id="particles"></div>
+  
+  <!-- Flying Elements -->
+  <div class="owl">🦉</div>
+  <div class="golden-snitch">⚡</div>
+  
+  <!-- Shooting Stars -->
+  <div class="shooting-star" style="top: 20%; animation-delay: 0s;"></div>
+  <div class="shooting-star" style="top: 40%; animation-delay: 2s;"></div>
+  <div class="shooting-star" style="top: 60%; animation-delay: 4s;"></div>
+
+  <!-- Harry Potter Enhancements -->
+  <div class="owl-with-letter" style="top: 15%; animation-delay: 0s;">🦉</div>
+  <div class="owl-with-letter" style="top: 25%; animation-delay: 10s;">🦉</div>
+  
+  <!-- Floating Candles -->
+  <div class="floating-candle" style="left: 10%; animation-delay: 0s;"></div>
+  <div class="floating-candle" style="left: 20%; animation-delay: 5s;"></div>
+  <div class="floating-candle" style="left: 30%; animation-delay: 10s;"></div>
+  <div class="floating-candle" style="left: 40%; animation-delay: 15s;"></div>
+  <div class="floating-candle" style="left: 50%; animation-delay: 7s;"></div>
+  <div class="floating-candle" style="left: 60%; animation-delay: 12s;"></div>
+  <div class="floating-candle" style="left: 70%; animation-delay: 3s;"></div>
+  <div class="floating-candle" style="left: 80%; animation-delay: 8s;"></div>
+  <div class="floating-candle" style="left: 90%; animation-delay: 13s;"></div>
+  
+  <!-- Potion Bubbles -->
+  <div class="potion-bubble" style="left: 15%; width: 20px; height: 20px; animation-delay: 0s;"></div>
+  <div class="potion-bubble" style="left: 35%; width: 15px; height: 15px; animation-delay: 3s;"></div>
+  <div class="potion-bubble" style="left: 55%; width: 25px; height: 25px; animation-delay: 6s;"></div>
+  <div class="potion-bubble" style="left: 75%; width: 18px; height: 18px; animation-delay: 9s;"></div>
+  
+  <!-- Marauder's Map Footprints -->
+  <div class="footprints" style="animation-delay: 0s;">👣</div>
+  <div class="footprints" style="animation-delay: 10s;">👣</div>
+  <div class="footprints" style="animation-delay: 20s;">👣</div>
+
+  <h1>✨ Teams Working on Magical Ideas ✨</h1>
+
+  <div class="team-container">
+    <div class="team-card">
+      <div class="idea-title">AI Tutor Assistant</div>
+      <div class="members">Team: Riya, Arjun, Meera</div>
+      <div class="description">An intelligent assistant that helps students with real-time learning and feedback.</div>
+      <button class="join-btn" onclick="sendRequest(this)">Send Join Request</button>
+      <div class="request-sent">Request Sent ✅</div>
+    </div>
+
+    <div class="team-card">
+      <div class="idea-title">Smart Waste Tracker</div>
+      <div class="members">Team: Kunal, Priya</div>
+      <div class="description">A system to track, categorize, and reduce urban waste through community feedback.</div>
+      <button class="join-btn" onclick="sendRequest(this)">Send Join Request</button>
+      <div class="request-sent">Request Sent ✅</div>
+    </div>
+
+    <div class="team-card">
+      <div class="idea-title">Voice Controlled Drone</div>
+      <div class="members">Team: Aman, Shreya, Vikas</div>
+      <div class="description">A drone controlled entirely by voice commands, useful for search and rescue operations.</div>
+      <button class="join-btn" onclick="sendRequest(this)">Send Join Request</button>
+      <div class="request-sent">Request Sent ✅</div>
+    </div>
+
+    <div class="team-card">
+      <div class="idea-title">Mental Wellness App</div>
+      <div class="members">Team: Shruti, Ankit</div>
+      <div class="description">A mindfulness and mental wellness platform with habit tracking and AI journaling.</div>
+      <button class="join-btn" onclick="sendRequest(this)">Send Join Request</button>
+      <div class="request-sent">Request Sent ✅</div>
+    </div>
+
+    <div class="team-card">
+      <div class="idea-title">Wizard Navigation Spell</div>
+      <div class="members">Team: Neville, Luna</div>
+      <div class="description">A magical map app that shows hidden shortcuts and teleports around campus using AR.</div>
+      <button class="join-btn" onclick="sendRequest(this)">Send Join Request</button>
+      <div class="request-sent">Request Sent ✅</div>
+    </div>
+
+    <div class="team-card">
+      <div class="idea-title">Potion Reminder App</div>
+      <div class="members">Team: Hermione, Seamus</div>
+      <div class="description">Notifies potion brewers of timings, ingredients, and alerts with recipe steps.</div>
+      <button class="join-btn" onclick="sendRequest(this)">Send Join Request</button>
+      <div class="request-sent">Request Sent ✅</div>
+    </div>
+
+    <div class="team-card">
+      <div class="idea-title">Pensieve Memory Vault</div>
+      <div class="members">Team: Hagrid, Vivik</div>
+      <div class="description">A cloud-based platform using AI to securely store, organize, and visualize wizarding memories.</div>
+      <button class="join-btn" onclick="sendRequest(this)">Send Join Request</button>
+      <div class="request-sent">Request Sent ✅</div>
+    </div>
+
+    <div class="team-card">
+      <div class="idea-title">WizOS – The Magical Operating Systemr</div>
+      <div class="members">Team: Vicky,Sneha</div>
+      <div class="description">A voice-enabled OS that streamlines commands, workflows, and resources through an intuitive AI interface.</div>
+      <button class="join-btn" onclick="sendRequest(this)">Send Join Request</button>
+      <div class="request-sent">Request Sent ✅</div>
+    </div>
+
+
+
+    <div class="team-card">
+      <div class="idea-title">Time Travel Scheduler</div>
+      <div class="members">Team: Albus, Minerva</div>
+      <div class="description">A planner for coordinating events across different timelines safely and efficiently.</div>
+      <button class="join-btn" onclick="sendRequest(this)">Send Join Request</button>
+      <div class="request-sent">Request Sent ✅</div>
+    </div>
+
+    <div class="team-card">
+      <div class="idea-title">Spell-Based Translator</div>
+      <div class="members">Team: Ron, Padma</div>
+      <div class="description">A magical tool that translates wizarding languages and runes into real-world speech.</div>
+      <button class="join-btn" onclick="sendRequest(this)">Send Join Request</button>
+      <div class="request-sent">Request Sent ✅</div>
+    </div>
+  </div>
+
+  <script>
+    function sendRequest(button) {
+      button.disabled = true;
+      button.style.background = "#999";
+      const msg = button.nextElementSibling;
+      msg.style.display = 'block';
+      
+      // Add magical effect when sending request
+      createSpellEffect(button);
+    }
+
+    // Create floating magical particles
+    function createParticles() {
+      const particles = document.getElementById('particles');
+      const particleSymbols = ['✨', '⭐', '🌟', '💫', '✦', '✧', '⋆', '◦', '⚡', '🔮'];
+      
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.innerHTML = particleSymbols[Math.floor(Math.random() * particleSymbols.length)];
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+        particles.appendChild(particle);
+      }
+    }
+
+    // Add staggered animation to team cards
+    function animateCards() {
+      const cards = document.querySelectorAll('.team-card');
+      cards.forEach((card, index) => {
+        card.style.animationDelay = (index * 0.1) + 's';
+      });
+    }
+
+    // Create spell effect when joining team
+    function createSpellEffect(element) {
+      const rect = element.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      for (let i = 0; i < 20; i++) {
+        const spell = document.createElement('div');
+        spell.style.position = 'fixed';
+        spell.style.left = centerX + 'px';
+        spell.style.top = centerY + 'px';
+        spell.style.width = '5px';
+        spell.style.height = '5px';
+        spell.style.borderRadius = '50%';
+        spell.style.backgroundColor = ['#ffd700', '#f5da42', '#ffb300', '#ff0000', '#00ff00', '#0000ff'][Math.floor(Math.random() * 6)];
+        spell.style.zIndex = '1000';
+        spell.style.pointerEvents = 'none';
+        
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * 100 + 50;
+        const duration = Math.random() * 1 + 0.5;
+        
+        spell.style.animation = `spellTravel ${duration}s forwards`;
+        document.body.appendChild(spell);
+        
+        spell.animate([
+          { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+          { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`, opacity: 0 }
+        ], {
+          duration: duration * 1000,
+          easing: 'ease-out',
+          fill: 'forwards'
+        });
+        
+        setTimeout(() => {
+          spell.remove();
+        }, duration * 1000);
+      }
+    }
+
+    // Initialize animations when page loads
+    window.addEventListener('load', () => {
+      createParticles();
+      animateCards();
+    });
+
+    // Add magical click effect
+    document.addEventListener('click', (e) => {
+      const sparkle = document.createElement('div');
+      sparkle.innerHTML = '✨';
+      sparkle.style.position = 'absolute';
+      sparkle.style.left = e.pageX + 'px';
+      sparkle.style.top = e.pageY + 'px';
+      sparkle.style.color = '#ffd700';
+      sparkle.style.fontSize = '20px';
+      sparkle.style.pointerEvents = 'none';
+      sparkle.style.zIndex = '1000';
+      sparkle.style.animation = 'float 2s ease-out forwards';
+      document.body.appendChild(sparkle);
+      
+      setTimeout(() => {
+        sparkle.remove();
+      }, 2000);
+    });
+  </script>
+
+</body>
+</html>

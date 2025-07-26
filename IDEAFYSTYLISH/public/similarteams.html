@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Similar Teams - IDEAFY (Magical Edition)</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Philosopher:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Philosopher', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #2d1b69 0%, #8b0000 50%, #daa520 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Magical background effects */
+    .magical-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(ellipse at center, rgba(218, 165, 32, 0.1) 0%, transparent 70%);
+    }
+
+    /* Golden Snitches floating */
+    .golden-snitch {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle, #ffd700 0%, #daa520 50%, #b8860b 100%);
+      border-radius: 50%;
+      animation: snitch-flight 15s infinite linear;
+      box-shadow: 0 0 15px #ffd700, 0 0 25px #ffd700;
+    }
+
+    .golden-snitch::before,
+    .golden-snitch::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 3px;
+      background: rgba(255, 215, 0, 0.8);
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .golden-snitch::before {
+      left: -10px;
+      animation: wing-flap 0.5s infinite alternate;
+    }
+
+    .golden-snitch::after {
+      right: -10px;
+      animation: wing-flap 0.5s infinite alternate-reverse;
+    }
+
+    @keyframes snitch-flight {
+      0% {
+        transform: translate(-50px, 100vh) rotate(0deg);
+      }
+      25% {
+        transform: translate(20vw, 75vh) rotate(90deg);
+      }
+      50% {
+        transform: translate(80vw, 50vh) rotate(180deg);
+      }
+      75% {
+        transform: translate(30vw, 25vh) rotate(270deg);
+      }
+      100% {
+        transform: translate(-50px, -50px) rotate(360deg);
+      }
+    }
+
+    @keyframes wing-flap {
+      0% { transform: translateY(-50%) scaleY(1); }
+      100% { transform: translateY(-50%) scaleY(0.3); }
+    }
+
+    /* Magical sparkles */
+    .sparkle {
+      position: absolute;
+      color: #ffd700;
+      font-size: 10px;
+      animation: sparkle-twinkle 2s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    @keyframes sparkle-twinkle {
+      0%, 100% { 
+        opacity: 0; 
+        transform: scale(0) rotate(0deg);
+      }
+      50% { 
+        opacity: 1; 
+        transform: scale(1) rotate(180deg);
+      }
+    }
+
+    /* Main container */
+    .team-container {
+      background: rgba(139, 0, 0, 0.15);
+      backdrop-filter: blur(15px);
+      border: 2px solid rgba(218, 165, 32, 0.3);
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 
+        0 0 30px rgba(218, 165, 32, 0.3),
+        inset 0 0 20px rgba(255, 215, 0, 0.1);
+      width: 90%;
+      max-width: 600px;
+      z-index: 1;
+      animation: magical-entrance 2s ease-out;
+      position: relative;
+    }
+
+    @keyframes magical-entrance {
+      0% { 
+        opacity: 0; 
+        transform: translateY(50px) scale(0.8);
+        filter: blur(10px);
+      }
+      100% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    h2 {
+      text-align: center;
+      color: #ffd700;
+      margin-bottom: 25px;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-family: 'Cinzel', serif;
+      text-shadow: 
+        0 0 10px #ffd700,
+        0 0 20px #ffd700,
+        0 0 30px #daa520;
+      animation: title-glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes title-glow {
+      0% { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #daa520; }
+      100% { text-shadow: 0 0 15px #ffd700, 0 0 25px #ffd700, 0 0 35px #daa520; }
+    }
+
+    .team-list button {
+      display: block;
+      width: 100%;
+      margin: 15px 0;
+      padding: 15px;
+      background: linear-gradient(45deg, #8b0000, #dc143c, #b8860b);
+      color: #ffd700;
+      border: 2px solid rgba(218, 165, 32, 0.5);
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      font-family: 'Philosopher', sans-serif;
+      font-weight: 600;
+      animation: button-materialize 0.8s ease forwards;
+      opacity: 0;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .team-list button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .team-list button:hover::before {
+      left: 100%;
+    }
+
+    .team-list button:nth-child(1) { animation-delay: 0.3s; }
+    .team-list button:nth-child(2) { animation-delay: 0.6s; }
+    .team-list button:nth-child(3) { animation-delay: 0.9s; }
+
+    @keyframes button-materialize {
+      0% { 
+        transform: translateX(-100px) rotate(-10deg); 
+        opacity: 0; 
+      }
+      100% { 
+        transform: translateX(0) rotate(0deg); 
+        opacity: 1; 
+      }
+    }
+
+
+.team-list button:hover {
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(218, 165, 32, 0.6);
+    opacity: 1; /* Ensure the button stays visible */
+    z-index: 1; /* Keep button above other elements */
+}
+
+.team-list button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+    transition: left 0.5s;
+    z-index: -1; /* Keep the effect behind the button text */
+}
+
+.team-list button:hover::before {
+    left: 100%;
+    opacity: 1;
+}
+
+/* Remove or comment out the magical-pulse animation */
+/* @keyframes magical-pulse {...} */ -->
+
+    <!-- @keyframes magical-pulse {
+      0% { 
+        box-shadow: 
+          0 10px 25px rgba(0, 0, 0, 0.3),
+          0 0 20px rgba(218, 165, 32, 0.6);
+      }
+      100% { 
+        box-shadow: 
+          0 15px 35px rgba(0, 0, 0, 0.4),
+          0 0 30px rgba(218, 165, 32, 0.8);
+      }
+    } -->
+
+    .collab-section {
+      display: none;
+      text-align: center;
+      margin-top: 25px;
+      animation: section-reveal 0.8s ease-out;
+    }
+
+    @keyframes section-reveal {
+      0% { 
+        opacity: 0; 
+        transform: translateY(20px); 
+      }
+      100% { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+
+    #selectedTeam {
+      color: #ffd700;
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    .send-btn {
+      padding: 12px 25px;
+      background: linear-gradient(45deg, #dc143c, #8b0000);
+      color: #ffd700;
+      border: 2px solid #daa520;
+      border-radius: 25px;
+      cursor: pointer;
+      font-family: 'Philosopher', sans-serif;
+      font-weight: 600;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .send-btn::after {
+      content: '✨';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      font-size: 20px;
+      transition: opacity 0.3s ease;
+    }
+
+    .send-btn:hover {
+      transform: scale(1.1) rotate(2deg);
+      box-shadow: 0 0 25px rgba(218, 165, 32, 0.8);
+    }
+
+    .send-btn:hover::after {
+      opacity: 1;
+    }
+
+    .confirmation {
+      margin-top: 15px;
+      color: #32cd32;
+      font-weight: bold;
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      text-shadow: 0 0 10px rgba(50, 205, 50, 0.5);
+      animation: confirmation-glow 2s ease-in-out;
+    }
+
+    @keyframes confirmation-glow {
+      0% { opacity: 0; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.1); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .dashboard-link {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10;
+    }
+
+    .dashboard-link button {
+      background: linear-gradient(45deg, #4CAF50, #45a049);
+      color: white;
+      padding: 12px 20px;
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 25px;
+      cursor: pointer;
+      font-family: 'Philosopher', sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .dashboard-link button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Wand cursor effect */
+    .wand-cursor {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: #ffd700;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1000;
+      mix-blend-mode: difference;
+      box-shadow: 0 0 10px #ffd700;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+        align-items: flex-start;
+        padding-top: 50px;
+      }
+      
+      .team-container {
+        padding: 20px;
+        margin: 10px;
+        min-height: auto;
+      }
+      
+      .team-list button {
+        padding: 12px;
+        margin: 10px 0;
+      }
+      
+      .dashboard-link {
+        bottom: 10px;
+        right: 10px;
+      }
+      
+      .dashboard-link button {
+        padding: 10px 15px;
+      }
+      
+      .golden-snitch {
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .team-container {
+        padding: 15px;
+        width: 95%;
+      }
+      
+      h2 {
+        margin-bottom: 20px;
+      }
+      
+      .team-list button {
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+      
+      .send-btn {
+        padding: 10px 20px;
+      }
+    }
+
+    /* Magical cursor trail */
+    .cursor-trail {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #ffd700, transparent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 999;
+      animation: trail-fade 1s ease-out forwards;
+    }
+
+    @keyframes trail-fade {
+      0% { 
+        opacity: 1; 
+        transform: scale(1);
+      }
+      100% { 
+        opacity: 0; 
+        transform: scale(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Magical background -->
+  <div class="magical-bg"></div>
+
+  <!-- Golden Snitches -->
+  <div class="golden-snitch" style="left: 10%; animation-duration: 12s; animation-delay: 0s;"></div>
+  <div class="golden-snitch" style="left: 30%; animation-duration: 15s; animation-delay: 2s;"></div>
+  <div class="golden-snitch" style="left: 50%; animation-duration: 18s; animation-delay: 4s;"></div>
+  <div class="golden-snitch" style="left: 70%; animation-duration: 14s; animation-delay: 1s;"></div>
+  <div class="golden-snitch" style="left: 90%; animation-duration: 16s; animation-delay: 3s;"></div>
+
+  <!-- Magical sparkles -->
+  <div class="sparkle" style="top: 20%; left: 15%; animation-delay: 0s;"><i class="fas fa-star"></i></div>
+  <div class="sparkle" style="top: 40%; left: 85%; animation-delay: 0.5s;"><i class="fas fa-star"></i></div>
+  <div class="sparkle" style="top: 60%; left: 25%; animation-delay: 1s;"><i class="fas fa-star"></i></div>
+  <div class="sparkle" style="top: 80%; left: 75%; animation-delay: 1.5s;"><i class="fas fa-star"></i></div>
+  <div class="sparkle" style="top: 10%; left: 60%; animation-delay: 2s;"><i class="fas fa-star"></i></div>
+
+  <div class="team-container">
+    <h2><i class="fas fa-magic"></i> Teams Working on Similar Ideas <i class="fas fa-magic"></i></h2>
+    <div class="team-list">
+      <button onclick="showCollab('Team Innovate')">
+        <i class="fas fa-hat-wizard"></i> Team Innovate
+      </button>
+      <button onclick="showCollab('Idea Builders')">
+        <i class="fas fa-wand-magic"></i> Idea Builders
+      </button>
+      <button onclick="showCollab('Visioneers')">
+        <i class="fas fa-crystal-ball"></i> Visioneers
+      </button>
+    </div>
+
+    <div class="collab-section" id="collabSection">
+      <p id="selectedTeam">Send collaboration request to ...</p>
+      <button class="send-btn" onclick="sendRequest()">
+        <i class="fas fa-paper-plane"></i> Send Magical Request
+      </button>
+      <p class="confirmation" id="confirmationMsg"></p>
+    </div>
+  </div>
+
+  <div class="dashboard-link">
+    <button onclick="window.location.href='dashboard.html'">
+      <i class="fas fa-home"></i> Go to Dashboard
+    </button>
+  </div>
+
+  <!-- Wand cursor -->
+  <div class="wand-cursor" id="wandCursor"></div>
+
+  <script>
+    // Magical cursor tracking
+    const wandCursor = document.getElementById('wandCursor');
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      // Create magical trail
+      createTrail(e.clientX, e.clientY);
+    });
+
+    function animateCursor() {
+      const speed = 0.1;
+      cursorX += (mouseX - cursorX) * speed;
+      cursorY += (mouseY - cursorY) * speed;
+      
+      wandCursor.style.left = cursorX + 'px';
+      wandCursor.style.top = cursorY + 'px';
+      
+      requestAnimationFrame(animateCursor);
+    }
+
+    animateCursor();
+
+    // Create magical cursor trail
+    function createTrail(x, y) {
+      const trail = document.createElement('div');
+      trail.className = 'cursor-trail';
+      trail.style.left = x + 'px';
+      trail.style.top = y + 'px';
+      document.body.appendChild(trail);
+      
+      setTimeout(() => {
+        document.body.removeChild(trail);
+      }, 1000);
+    }
+
+    // Generate random sparkles
+    function createRandomSparkle() {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.innerHTML = '<i class="fas fa-star"></i>';
+      sparkle.style.top = Math.random() * 100 + '%';
+      sparkle.style.left = Math.random() * 100 + '%';
+      sparkle.style.animationDelay = '0s';
+      document.body.appendChild(sparkle);
+      
+      setTimeout(() => {
+        document.body.removeChild(sparkle);
+      }, 2000);
+    }
+
+    // Create sparkles periodically
+    setInterval(createRandomSparkle, 3000);
+
+    function showCollab(teamName) {
+      const collabSection = document.getElementById('collabSection');
+      collabSection.style.display = 'block';
+      document.getElementById('selectedTeam').innerHTML = 
+        `<i class="fas fa-scroll"></i> Send collaboration request to "<strong>${teamName}</strong>" <i class="fas fa-scroll"></i>`;
+      document.getElementById('confirmationMsg').innerText = '';
+      
+      // Add magical sparkle effect
+      createMagicalEffect(collabSection);
+    }
+
+    let selectedTeamName = '';
+
+function showCollab(teamName) {
+  selectedTeamName = teamName;
+  const collabSection = document.getElementById('collabSection');
+  collabSection.style.display = 'block';
+  document.getElementById('selectedTeam').innerHTML = 
+    `<i class="fas fa-scroll"></i> Send collaboration request to "<strong>${teamName}</strong>" <i class="fas fa-scroll"></i>`;
+  document.getElementById('confirmationMsg').innerText = '';
+  
+  // Add magical sparkle effect
+  createMagicalEffect(collabSection);
+}
+
+function sendRequest() {
+  const confirmationMsg = document.getElementById('confirmationMsg');
+  confirmationMsg.innerHTML = `✨ <i class="fas fa-check-circle"></i> Collaboration request sent to <strong>${selectedTeamName}</strong>! <i class="fas fa-check-circle"></i> ✨`;
+
+  // Create celebration sparkles
+  for (let i = 0; i < 10; i++) {
+    setTimeout(() => createRandomSparkle(), i * 100);
+  }
+}
+
+
+    function createMagicalEffect(element) {
+      const rect = element.getBoundingClientRect();
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          const sparkle = document.createElement('div');
+          sparkle.className = 'sparkle';
+          sparkle.innerHTML = '<i class="fas fa-magic"></i>';
+          sparkle.style.position = 'absolute';
+          sparkle.style.top = (rect.top + Math.random() * rect.height) + 'px';
+          sparkle.style.left = (rect.left + Math.random() * rect.width) + 'px';
+          sparkle.style.zIndex = '1001';
+          document.body.appendChild(sparkle);
+          
+          setTimeout(() => {
+            if (document.body.contains(sparkle)) {
+              document.body.removeChild(sparkle);
+            }
+          }, 2000);
+        }, i * 200);
+      }
+    }
+
+    // Add magical button hover effects
+    document.querySelectorAll('.team-list button').forEach(button => {
+      button.addEventListener('mouseenter', function() {
+        createMagicalEffect(this);
+      });
+    });
+
+    // Mobile touch support
+    if ('ontouchstart' in window) {
+      document.addEventListener('touchmove', (e) => {
+        const touch = e.touches[0];
+        createTrail(touch.clientX, touch.clientY);
+      });
+    }
+  </script>
+</body>
+</html>

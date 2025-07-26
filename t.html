@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IDEAFY Dashboard - Magical Edition</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #2d1b69, #8b5a3c, #c9b037, #1a472a);
+      background-size: 400% 400%;
+      animation: magicalGradient 15s ease infinite;
+      background-attachment: fixed;
+      color: #f8fafc;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    @keyframes magicalGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Golden Snitch Animation */
+    .golden-snitch {
+      position: fixed;
+      width: 30px;
+      height: 30px;
+      color: #ffd700;
+      font-size: 24px;
+      z-index: 5;
+      animation: snitchFly 20s linear infinite;
+      pointer-events: none;
+    }
+
+    .golden-snitch:nth-child(1) {
+      top: 10%;
+      animation-delay: 0s;
+      animation-duration: 25s;
+    }
+
+    .golden-snitch:nth-child(2) {
+      top: 30%;
+      animation-delay: -5s;
+      animation-duration: 30s;
+    }
+
+    .golden-snitch:nth-child(3) {
+      top: 60%;
+      animation-delay: -10s;
+      animation-duration: 22s;
+    }
+
+    @keyframes snitchFly {
+      0% { 
+        transform: translateX(-50px) translateY(0px) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 1; }
+      50% { 
+        transform: translateX(50vw) translateY(-20px) rotate(180deg);
+      }
+      90% { opacity: 1; }
+      100% { 
+        transform: translateX(calc(100vw + 50px)) translateY(10px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Magical Sparkles */
+    .sparkle {
+      position: fixed;
+      color: #ffd700;
+      font-size: 12px;
+      z-index: 4;
+      animation: sparkle 3s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sparkle {
+      0% { 
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+      }
+      50% { 
+        opacity: 1;
+        transform: scale(1) rotate(180deg);
+      }
+      100% { 
+        opacity: 0;
+        transform: scale(0) rotate(360deg);
+      }
+    }
+
+    /* Floating magical background */
+    .floating-bg {
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background-image: radial-gradient(#ffd70033 1px, transparent 1px);
+      background-size: 80px 80px;
+      animation: float 40s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(80px, 80px) rotate(360deg); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffd700;
+      margin-bottom: 30px;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.7), 0 0 20px rgba(255,215,0,0.5);
+      animation: magicalPulse 3s infinite;
+      position: relative;
+    }
+
+    h1::before {
+      content: '✨';
+      position: absolute;
+      left: -40px;
+      animation: sparkleRotate 2s linear infinite;
+    }
+
+    h1::after {
+      content: '✨';
+      position: absolute;
+      right: -40px;
+      animation: sparkleRotate 2s linear infinite reverse;
+    }
+
+    @keyframes magicalPulse {
+      0% { transform: scale(1); text-shadow: 3px 3px 6px rgba(0,0,0,0.7), 0 0 20px rgba(255,215,0,0.5); }
+      50% { transform: scale(1.05); text-shadow: 3px 3px 6px rgba(0,0,0,0.7), 0 0 30px rgba(255,215,0,0.8); }
+      100% { transform: scale(1); text-shadow: 3px 3px 6px rgba(0,0,0,0.7), 0 0 20px rgba(255,215,0,0.5); }
+    }
+
+    @keyframes sparkleRotate {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.2); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    .dashboard-menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 50px;
+    }
+
+    .dashboard-item {
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 25px;
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      box-shadow: 0 10px 35px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,215,0,0.2), transparent);
+      transition: left 0.6s;
+    }
+
+    .dashboard-item:hover::before {
+      left: 100%;
+    }
+
+    .dashboard-item:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,215,0,0.3);
+      border-color: rgba(255, 215, 0, 0.6);
+    }
+
+    .dashboard-item:nth-child(1) { border-color: rgba(220, 20, 60, 0.5); } /* Gryffindor */
+    .dashboard-item:nth-child(2) { border-color: rgba(34, 139, 34, 0.5); } /* Slytherin */
+    .dashboard-item:nth-child(3) { border-color: rgba(70, 130, 180, 0.5); } /* Ravenclaw */
+    .dashboard-item:nth-child(4) { border-color: rgba(255, 215, 0, 0.5); } /* Hufflepuff */
+    .dashboard-item:nth-child(5) { border-color: rgba(138, 43, 226, 0.5); } /* Magic Purple */
+    .dashboard-item:nth-child(6) { border-color: rgba(255, 140, 0, 0.5); } /* Orange */
+
+    .dashboard-item h3 {
+      margin-top: 0;
+      color: #ffd700;
+      font-size: 1.5rem;
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+      margin-bottom: 15px;
+    }
+
+    .dashboard-item p {
+      color: #e2e8f0;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      line-height: 1.6;
+    }
+
+    .idea-feed {
+      margin-top: 40px;
+    }
+
+    .idea-feed h2 {
+      color: #ffd700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      margin-bottom: 30px;
+    }
+
+    .idea-card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      animation: fadeInUp 0.8s ease-in;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .idea-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ffd700, #ff6b6b, #4ecdc4, #45b7d1);
+      background-size: 400% 400%;
+      border-radius: 15px;
+      z-index: -1;
+      animation: magicalBorder 4s ease infinite;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .idea-card:hover::before {
+      opacity: 1;
+    }
+
+    @keyframes magicalBorder {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .idea-title {
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #2d3748;
+      margin-bottom: 15px;
+      font-family: 'Cinzel', serif;
+    }
+
+    .idea-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .idea-actions button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .idea-actions button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      transition: all 0.3s;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .idea-actions button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .idea-actions button:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .idea-actions button:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .comment-box {
+      display: none;
+      margin-top: 15px;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .comment-box textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 2px solid #e2e8f0;
+      font-family: 'Poppins', sans-serif;
+      transition: border-color 0.3s;
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .comment-box textarea:focus {
+      outline: none;
+      border-color: #ffd700;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    .comment-box button {
+      margin-top: 10px;
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .comment-box button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
+    }
+
+    .notification-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      color: #2d3748;
+      border: none;
+      padding: 12px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      z-index: 1001;
+      animation: magicalRing 3s infinite;
+      transition: all 0.3s;
+    }
+
+    .notification-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    }
+
+    @keyframes magicalRing {
+      0% { transform: rotate(0deg) scale(1); }
+      10% { transform: rotate(10deg) scale(1.05); }
+      20% { transform: rotate(-10deg) scale(1.05); }
+      30% { transform: rotate(5deg) scale(1.02); }
+      40% { transform: rotate(-5deg) scale(1.02); }
+      50% { transform: rotate(0deg) scale(1); }
+      100% { transform: rotate(0deg) scale(1); }
+    }
+
+    .notification-box {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      width: 300px;
+      max-width: calc(100vw - 40px);
+      max-height: 350px;
+      overflow-y: auto;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border-radius: 15px;
+      padding: 20px;
+      z-index: 1000;
+      display: none;
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      animation: notificationSlide 0.3s ease;
+    }
+
+    @keyframes notificationSlide {
+      from { opacity: 0; transform: translateY(-20px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .notification-box h4 {
+      margin: 0 0 15px;
+      font-size: 1.2rem;
+      color: #2d3748;
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+    }
+
+    .notification-item {
+      font-size: 0.9rem;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+      color: #4a5568;
+      transition: background-color 0.3s;
+    }
+
+    .notification-item:hover {
+      background-color: rgba(255, 215, 0, 0.1);
+      border-radius: 5px;
+      padding-left: 5px;
+    }
+
+    .notification-item:last-child {
+      border-bottom: none;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px 15px;
+      }
+
+      h1::before,
+      h1::after {
+        display: none;
+      }
+
+      .dashboard-menu {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .dashboard-item {
+        padding: 20px;
+      }
+
+      .dashboard-item h3 {
+        font-size: 1.3rem;
+      }
+
+      .idea-card {
+        padding: 20px;
+      }
+
+      .idea-title {
+        font-size: 1.2rem;
+      }
+
+      .idea-actions {
+        flex-direction: column;
+      }
+
+      .idea-actions button {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .notification-box {
+        width: calc(100vw - 30px);
+        right: 15px;
+      }
+
+      .golden-snitch {
+        font-size: 20px;
+        width: 25px;
+        height: 25px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px 10px;
+      }
+
+      .dashboard-item {
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .idea-card {
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+
+      .notification-toggle {
+        top: 15px;
+        right: 15px;
+        padding: 10px;
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Custom scrollbar for webkit browsers */
+    .notification-box::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .notification-box::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.1);
+      border-radius: 3px;
+    }
+
+    .notification-box::-webkit-scrollbar-thumb {
+      background: rgba(255, 215, 0, 0.6);
+      border-radius: 3px;
+    }
+
+    .notification-box::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 215, 0, 0.8);
+    }
+    .dashboard-item.btn {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 25px;
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-item.btn:nth-child(1) { border-color: rgba(220, 20, 60, 0.5); }
+.dashboard-item.btn:nth-child(2) { border-color: rgba(34, 139, 34, 0.5); }
+.dashboard-item.btn:nth-child(3) { border-color: rgba(70, 130, 180, 0.5); }
+.dashboard-item.btn:nth-child(4) { border-color: rgba(255, 215, 0, 0.5); }
+.dashboard-item.btn:nth-child(5) { border-color: rgba(138, 43, 226, 0.5); }
+.dashboard-item.btn:nth-child(6) { border-color: rgba(255, 140, 0, 0.5); }
+
+.dashboard-item.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.2), transparent);
+  transition: left 0.6s;
+}
+
+.dashboard-item.btn:hover::before {
+  left: 100%;
+}
+
+.dashboard-item.btn:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,215,0,0.3);
+  border-color: rgba(255, 215, 0, 0.6);
+}
+
+
+  </style>
+</head>
+<body>
+  <!-- Golden Snitches -->
+  <div class="golden-snitch">🏆</div>
+  <div class="golden-snitch">⚡</div>
+  <div class="golden-snitch">🔮</div>
+
+  <div class="floating-bg"></div>
+
+  <div class="container">
+    <h1><i class="fas fa-magic"></i> IDEAFY Dashboard</h1>
+
+    <!-- <div class="dashboard-menu">
+      <div class="dashboard-item">
+        <h3><i class="fas fa-user-wizard"></i> Profile</h3>
+        <p>View or edit your magical profile information and house affiliation.</p>
+      </div>
+      <div class="dashboard-item">
+        <h3><i class="fas fa-lightbulb"></i> Submit Idea</h3>
+        <p>Cast your brilliant ideas into the world and earn magical tokens.</p>
+      </div>
+      <div class="dashboard-item">
+        <h3><i class="fas fa-search"></i> Discover Ideas</h3>
+        <p>Explore enchanting ideas from fellow wizards and witches.</p>
+      </div>
+      <div class="dashboard-item">
+        <h3><i class="fas fa-handshake"></i> Collaborate</h3>
+        <p>Join magical collaborations and form powerful alliances.</p>
+      </div>
+      <div class="dashboard-item">
+        <h3><i class="fas fa-coins"></i> Wallet</h3>
+        <p>Check your galleons, sickles, and magical reward balance.</p>
+      </div>
+      <div class="dashboard-item">
+        <h3><i class="fas fa-scroll"></i> My Ideas</h3>
+        <p>Track your submitted spells, potions, and magical innovations.</p>
+      </div>
+    </div> -->
+
+<div class="dashboard-menu">
+      <button class="btn" onclick="window.location.href='login+profile+gotowallet.html'">
+        <h3><i class="fas fa-user-wizard"></i> Profile</h3>
+        <p>View or edit your magical profile information and house affiliation.</p>
+      </button>
+      <button class="btn" onclick="window.location.href='ideasubmission.html'">
+        <h3><i class="fas fa-lightbulb"></i> Submit Idea</h3>
+        <p>Cast your brilliant ideas into the world and earn magical tokens.</p>
+      </button>
+      <button class="btn" onclick="window.location.href='jointeam.html'">
+        <h3><i class="fas fa-search"></i> Discover Ideas</h3>
+        <p>Explore enchanting ideas from fellow wizards and witches.</p>
+      </button>
+      <button class="btn" onclick="window.location.href='jointeam.html'">
+        <h3><i class="fas fa-handshake"></i> Collaborate</h3>
+        <p>Join magical collaborations and form powerful alliances.</p>
+      </button>
+      <button class="btn" onclick="window.location.href='wallet.html'">
+        <h3><i class="fas fa-coins"></i> Wallet</h3>
+        <p>Check your galleons, sickles, and magical reward balance.</p>
+      </button>
+      <button class="btn" onclick="window.location.href='ideasubmission.html'">
+        <h3><i class="fas fa-scroll"></i> My Ideas</h3>
+        <p>Track your submitted spells, potions, and magical innovations.</p>
+      </button>
+</div>
+
+
+
+    <div class="idea-feed">
+      <h2><i class="fas fa-fire"></i> Trending Magical Ideas</h2>
+
+      <div class="idea-card">
+        <div class="idea-title"><i class="fas fa-robot"></i> AI-Based Health Assistant</div>
+        <p style="color: #4a5568; margin-bottom: 15px;">A magical AI companion that monitors your health using ancient wisdom combined with modern technology.</p>
+        <div class="idea-actions">
+          <button onclick="comment(this)"><i class="fas fa-comment"></i> Comment</button>
+          <button onclick="vote(this)"><i class="fas fa-thumbs-up"></i> Vote</button>
+          <button onclick="collab(this)"><i class="fas fa-users"></i> Join Quest</button>
+        </div>
+        <div class="comment-box">
+          <textarea placeholder="Share your magical thoughts..."></textarea>
+          <button onclick="submitComment(this)"><i class="fas fa-paper-plane"></i> Cast Comment</button>
+        </div>
+      </div>
+
+      <div class="idea-card">
+        <div class="idea-title"><i class="fas fa-leaf"></i> Biodegradable Packaging</div>
+        <p style="color: #4a5568; margin-bottom: 15px;">Enchanted packaging that dissolves harmlessly into nature, leaving no trace behind.</p>
+        <div class="idea-actions">
+          <button onclick="comment(this)"><i class="fas fa-comment"></i> Comment</button>
+          <button onclick="vote(this)"><i class="fas fa-thumbs-up"></i> Vote</button>
+          <button onclick="collab(this)"><i class="fas fa-users"></i> Join Quest</button>
+        </div>
+        <div class="comment-box">
+          <textarea placeholder="Share your magical thoughts..."></textarea>
+          <button onclick="submitComment(this)"><i class="fas fa-paper-plane"></i> Cast Comment</button>
+        </div>
+      </div>
+
+      <div class="idea-card">
+        <div class="idea-title"><i class="fas fa-bolt"></i> Magical Energy Storage</div>
+        <p style="color: #4a5568; margin-bottom: 15px;">Revolutionary crystals that can store and release magical energy for sustainable power.</p>
+        <div class="idea-actions">
+          <button onclick="comment(this)"><i class="fas fa-comment"></i> Comment</button>
+          <button onclick="vote(this)"><i class="fas fa-thumbs-up"></i> Vote</button>
+          <button onclick="collab(this)"><i class="fas fa-users"></i> Join Quest</button>
+        </div>
+        <div class="comment-box">
+          <textarea placeholder="Share your magical thoughts..."></textarea>
+          <button onclick="submitComment(this)"><i class="fas fa-paper-plane"></i> Cast Comment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="notification-toggle" onclick="toggleNotifications()">
+    <i class="fas fa-bell"></i>
+  </button>
+  
+  <div class="notification-box" id="notifBox">
+    <h4><i class="fas fa-magic"></i> Magical Notifications</h4>
+    <div class="notification-item"><i class="fas fa-handshake"></i> Hermione sent a collaboration request.</div>
+    <div class="notification-item"><i class="fas fa-coins"></i> You earned 50 magical tokens!</div>
+    <div class="notification-item"><i class="fas fa-comment"></i> Harry commented on your potion idea.</div>
+    <div class="notification-item"><i class="fas fa-star"></i> Your idea reached the top of Ravenclaw house!</div>
+  </div>
+
+  <script>
+    // Create magical sparkles
+    function createSparkles() {
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+          const sparkle = document.createElement('div');
+          sparkle.className = 'sparkle';
+          sparkle.innerHTML = '✨';
+          sparkle.style.left = Math.random() * 100 + 'vw';
+          sparkle.style.top = Math.random() * 100 + 'vh';
+          sparkle.style.animationDelay = Math.random() * 2 + 's';
+          document.body.appendChild(sparkle);
+          
+          setTimeout(() => sparkle.remove(), 3000);
+        }, i * 500);
+      }
+    }
+
+    // Start sparkle animation
+    createSparkles();
+    setInterval(createSparkles, 15000);
+
+    function comment(btn) {
+      const box = btn.parentElement.nextElementSibling;
+      const isVisible = box.style.display === 'block';
+      
+      // Add magical effect
+      btn.style.transform = 'scale(0.95)';
+      setTimeout(() => btn.style.transform = '', 100);
+      
+      box.style.display = isVisible ? 'none' : 'block';
+      
+      if (!isVisible) {
+        // Create sparkle effect
+        createMagicalEffect(btn);
+      }
+    }
+
+    function vote(btn) {
+      // Magical voting effect
+      btn.innerHTML = '<i class="fas fa-check-circle"></i> Voted';
+      btn.disabled = true;
+      btn.style.background = 'linear-gradient(135deg, #48bb78 0%, #38a169 100%)';
+      
+      createMagicalEffect(btn);
+      showNotif('<i class="fas fa-magic"></i> Your magical vote has been cast!');
+      
+      // Add floating points animation
+      const points = document.createElement('div');
+      points.innerHTML = '+10 ✨';
+      points.style.position = 'absolute';
+      points.style.color = '#ffd700';
+      points.style.fontWeight = 'bold';
+      points.style.animation = 'floatUp 2s ease-out forwards';
+      points.style.pointerEvents = 'none';
+      btn.parentElement.appendChild(points);
+      
+      setTimeout(() => points.remove(), 2000);
+    }
+
+    function collab(btn) {
+      createMagicalEffect(btn);
+      showNotif('<i class="fas fa-magic"></i> Collaboration spell sent successfully!');
+      
+      // Change button text temporarily
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Sent!';
+      btn.style.background = 'linear-gradient(135deg, #9f7aea 0%, #805ad5 100%)';
+      
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.background = '';
+      }, 2000);
+    }
+
+    function submitComment(btn) {
+      const textarea = btn.parentElement.querySelector('textarea');
+      if (textarea.value.trim()) {
+        createMagicalEffect(btn);
+        showNotif('<i class="fas fa-scroll"></i> Your magical comment has been inscribed!');
+        textarea.value = '';
+        
+        // Hide comment box after submission
+        setTimeout(() => {
+          btn.parentElement.style.display = 'none';
+        }, 1000);
+      }
+    }
+
+    function createMagicalEffect(element) {
+      const rect = element.getBoundingClientRect();
+      for (let i = 0; i < 8; i++) {
+        const particle = document.createElement('div');
+        particle.innerHTML = ['✨', '⭐', '💫', '🌟'][Math.floor(Math.random() * 4)];
+        particle.style.position = 'fixed';
+        particle.style.left = rect.left + rect.width/2 + 'px';
+        particle.style.top = rect.top + rect.height/2 + 'px';
+        particle.style.pointerEvents = 'none';
+        particle.style.zIndex = '9999';
+        particle.style.fontSize = '14px';
+        particle.style.animation = magicalBurst 1s ease-out forwards;
+        particle.style.animationDelay = i * 0.1 + 's';
+        
+        const angle = (360 / 8) * i;
+        particle.style.setProperty('--angle', angle + 'deg');
+        
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 1000);
+      }
+    }
+
+    function showNotif(text) {
+      const note = document.createElement('div');
+      note.className = 'notification-item';
+      note.innerHTML = text;
+      note.style.background = 'linear-gradient(135deg, #ffeaa7, #fdcb6e)';
+      note.style.borderRadius = '8px';
+      note.style.padding = '10px';
+      note.style.margin = '5px 0';
+      note.style.animation = 'slideInRight 0.5s ease-out';
+      
+      const box = document.getElementById('notifBox');
+      box.insertBefore(note, box.children[1]);
+      
+      setTimeout(() => {
+        note.style.animation = 'slideOutRight 0.5s ease-in forwards';
+        setTimeout(() => note.remove(), 500);
+      }, 5000);
+    }
+
+    function toggleNotifications() {
+      const box = document.getElementById('notifBox');
+      const toggle = document.querySelector('.notification-toggle');
+      
+      if (box.style.display === 'block') {
+        box.style.display = 'none';
+        toggle.style.animation = '';
+      } else {
+        box.style.display = 'block';
+        toggle.style.animation = 'magicalRing 1s ease-out';
+        createMagicalEffect(toggle);
+      }
+    }
+
+    // Add CSS animations dynamically
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes magicalBurst {
+        0% {
+          transform: translate(0, 0) scale(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(calc(cos(var(--angle)) * 50px), calc(sin(var(--angle)) * 50px)) scale(1) rotate(360deg);
+          opacity: 0;
+        }
+      }
+      
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+      }
+      
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      
+      @keyframes slideOutRight {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100px);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Add magical cursor trail (optional enhancement)
+    document.addEventListener('mousemove', (e) => {
+      if (Math.random() < 0.1) { // 10% chance to create trail
+        const trail = document.createElement('div');
+        trail.innerHTML = '✨';
+        trail.style.position = 'fixed';
+        trail.style.left = e.clientX + 'px';
+        trail.style.top = e.clientY + 'px';
+        trail.style.pointerEvents = 'none';
+        trail.style.color = '#ffd700';
+        trail.style.fontSize = '10px';
+        trail.style.zIndex = '9998';
+        trail.style.animation = 'fadeOut 1s ease-out forwards';
+        
+        document.body.appendChild(trail);
+        setTimeout(() => trail.remove(), 1000);
+      }
+    });
+
+    // Additional CSS for fade out animation
+    const additionalStyle = document.createElement('style');
+    additionalStyle.textContent = `
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+          transform: scale(1);
+        }
+        to {
+          opacity: 0;
+          transform: scale(0.5);
+        }
+      }
+    `;
+    document.head.appendChild(additionalStyle);
+  </script>
+</body>
+</html>
